@@ -7,7 +7,7 @@ module.exports = {
     entry: "./src/com/mendix/widget/AutoLoadMore/AutoLoadMore.ts",
     output: {
         path: path.resolve(__dirname, "dist/tmp"),
-        filename: "src/com/mendix/widget/AutoLoadMore/AutoLoadMore.ts",
+        filename: "src/com/mendix/widget/AutoLoadMore/AutoLoadMore.js",
         libraryTarget:  "umd"
     },
     resolve: {
@@ -26,7 +26,13 @@ module.exports = {
         ]
     },
     devtool: "source-map",
-    externals: [ "mxui/widget/_WidgetBase", "dojo/_base/declare" ],
+    externals: [
+        "mxui/widget/_WidgetBase",
+        "dojo/_base/declare",
+        "dojo/dom-class",
+        "dojo/dom-style",
+        "dijit/registry"
+    ],
     plugins: [
         new CopyWebpackPlugin([
             { from: "src/**/*.js" },

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget id="com.mendix.widget.AutoLoadMore.AutoLoadMore" needsEntityContext="false" xmlns="http://www.mendix.com/widget/1.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../../../../../xsd/widget.xsd">
+    <name>AutoLoadMore</name>
+    <description>Loads more list view items as the user scrolls</description>
+    <icon/>
+    <properties>
+        <property key="targetName" type="string" required="true">
+            <caption>Target list view</caption>
+            <category>General</category>
+            <description>The name of the listview</description>
+        </property>
+    </properties>
+</widget>
