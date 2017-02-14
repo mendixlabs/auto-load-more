@@ -5,6 +5,10 @@ import * as domStyle from "dojo/dom-style";
 import * as domClass from "dojo/dom-class";
 import * as registry from "dijit/registry";
 
+import { createElement } from "react";
+import { render, unmountComponentAtNode } from "react-dom";
+import { Alert } from "./components/Alert";
+
 import "./ui/AutoLoadMore.css";
 
 class AutoLoadMore extends WidgetBase {
@@ -18,7 +22,12 @@ class AutoLoadMore extends WidgetBase {
     postCreate() {
         this.autoLoadClass = "mx-listview-auto-load-more";
         this.findTargetListView();
-        this.registerEvents();
+    }
+
+    uninitialize(): boolean {
+        unmountComponentAtNode(this.domNode);
+
+        return true;
     }
 
     private findTargetListView() {
@@ -33,7 +42,7 @@ class AutoLoadMore extends WidgetBase {
             this.targetWidget = registry.byNode(this.targetNode);
             this.verifyWidget(this.targetWidget);
         } else {
-            console.log(`Unable to find listview with the name "${this.targetName}"`);
+            this.renderAlert(`Unable to find listview with the name "${this.targetName}"`);
         }
     }
 
@@ -43,11 +52,11 @@ class AutoLoadMore extends WidgetBase {
                 this.transformWidget();
             } else {
                 targetWidget = null;
-                console.log("This Mendix version is incompatible with the auto load more widget");
+                this.renderAlert("This Mendix version is incompatible with the auto load more widget");
             }
         } else {
             this.targetWidget = null;
-            console.log(`Supplied target name "${this.targetName}" is not of the type listview`);
+            this.renderAlert(`Supplied target name "${this.targetName}" is not of the type listview`);
         }
     }
 
@@ -55,8 +64,10 @@ class AutoLoadMore extends WidgetBase {
         domClass.add(this.targetNode, this.autoLoadClass);
         setTimeout(() => {
             domStyle.set(this.targetNode, "height", `${this.targetNode.offsetHeight}px`);
+            console.log((this.targetWidget as any)._itemList);
             (this.targetWidget as any)._loadMore();
-        }, 1000);
+        }, 800);
+        this.registerEvents();
     }
 
     private registerEvents() {
@@ -67,6 +78,10 @@ class AutoLoadMore extends WidgetBase {
                 (this.targetWidget as any)._loadMore();
             }
         };
+    }
+
+    private renderAlert(message: string) {
+        render(createElement(Alert, { message }), this.domNode);
     }
 }
 
