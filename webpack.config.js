@@ -2,12 +2,14 @@ const webpack = require("webpack");
 const path = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const rootFilePath = "src/com/mendix/widget/autoloadmore/";
+const fileName = "AutoLoadMore";
 
 module.exports = {
-    entry: "./src/com/mendix/widget/AutoLoadMore/AutoLoadMore.ts",
+    entry: "./" + rootFilePath + fileName + ".ts",
     output: {
         path: path.resolve(__dirname, "dist/tmp"),
-        filename: "src/com/mendix/widget/AutoLoadMore/AutoLoadMore.js",
+        filename: rootFilePath + fileName + ".js",
         libraryTarget:  "umd"
     },
     resolve: {
@@ -28,6 +30,7 @@ module.exports = {
     devtool: "source-map",
     externals: [
         "mxui/widget/_WidgetBase",
+        "dojo/aspect",
         "dojo/_base/declare",
         "dojo/dom-class",
         "dojo/dom-style",
@@ -40,7 +43,7 @@ module.exports = {
         ], {
             copyUnmodified: true
         }),
-        new ExtractTextPlugin({ filename: "./src/com/mendix/widget/AutoLoadMore/ui/AutoLoadMore.css" }),
+        new ExtractTextPlugin({ filename: "./" + rootFilePath + "ui/" + fileName + ".css" }),
         new webpack.LoaderOptionsPlugin({
             debug: true
         })

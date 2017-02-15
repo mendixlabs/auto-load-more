@@ -2,10 +2,10 @@
 <package xmlns="http://www.mendix.com/package/1.0/">
     <clientModule name="AutoLoadMore" version="0.1.0" xmlns="http://www.mendix.com/clientModule/1.0/">
         <widgetFiles>
-            <widgetFile path="com/mendix/widget/AutoLoadMore/AutoLoadMore.xml"/>
+            <widgetFile path="com/mendix/widget/autoloadmore/AutoLoadMore.xml"/>
         </widgetFiles>
         <files>
-            <file path="com/mendix/widget/AutoLoadMore"/>
+            <file path="com/mendix/widget/autoloadmore"/>
         </files>
     </clientModule>
 </package>
