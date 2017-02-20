@@ -1,17 +1,21 @@
 import * as dojoDeclare from "dojo/_base/declare";
 import * as WidgetBase from "mxui/widget/_WidgetBase";
-
 import * as dojoAspect from "dojo/aspect";
 import * as domStyle from "dojo/dom-style";
 import * as domClass from "dojo/dom-class";
 import * as registry from "dijit/registry";
 
+import { createElement } from "react";
+import { render, unmountComponentAtNode } from "react-dom";
+
+import { Alert } from "./components/Alert";
 import "./ui/AutoLoadMore.css";
 
 interface ListView extends mxui.widget._WidgetBase {
-    _datasource: { _setSize: number, atEnd: () => boolean };
+    _datasource: { _setsize: number, atEnd: () => boolean, _pageSize: number };
     _loadMore: () => void;
     _onLoad: () => void;
+    _renderData: () => void;
 }
 
 class AutoLoadMore extends WidgetBase {
@@ -25,17 +29,23 @@ class AutoLoadMore extends WidgetBase {
 
     postCreate() {
         this.autoLoadClass = "mx-listview-auto-load-more";
-        this.targetNode = this.findTargetListView(this.targetName, this.domNode);
+        this.targetNode = this.findTargetNode(this.targetName, this.domNode);
         if (this.targetNode) {
             this.targetWidget = registry.byNode(this.targetNode);
-            const isValid = this.verifyWidget();
-            if (isValid) {
+            if (this.isValidWidget(this.targetWidget)) {
                 this.transformListView(this.targetNode, this.targetWidget, this.autoLoadClass);
             }
+            this.targetNode.addEventListener("scroll", () => this.onScroll());
         }
     }
 
-    private findTargetListView(targetName: string, domNode: HTMLElement): HTMLElement | null {
+    uninitialize(): boolean {
+        unmountComponentAtNode(this.domNode);
+
+        return true;
+    }
+
+    private findTargetNode(targetName: string, domNode: HTMLElement): HTMLElement | null {
         let queryNode = domNode.parentNode as HTMLElement;
         let targetNode: HTMLElement | null = null;
         while (!targetNode) {
@@ -45,22 +55,29 @@ class AutoLoadMore extends WidgetBase {
         }
 
         if (!targetNode) {
-            window.mx.ui.error(`Unable to find listview with the name "${targetName}"`);
+            this.renderAlert(`Unable to find listview with the name "${targetName}"`);
         }
 
         return targetNode;
     }
 
-    private verifyWidget(): boolean {
+    private isValidWidget(targetWidget: ListView): boolean {
         let valid = false;
-        if (this.targetWidget && this.targetWidget.declaredClass === "mxui.widget.ListView") {
-            if (this.targetWidget._onLoad && this.targetWidget._loadMore) {
+        if (targetWidget && targetWidget.declaredClass === "mxui.widget.ListView") {
+            if (targetWidget._onLoad
+                && targetWidget._loadMore
+                && targetWidget._renderData
+                && targetWidget._datasource
+                && targetWidget._datasource.atEnd
+                && typeof targetWidget._datasource._pageSize !== "undefined"
+                && typeof targetWidget._datasource._setsize !== "undefined"
+            ) {
                 valid = true;
             } else {
-                window.mx.ui.error("This Mendix version is incompatible with the auto load more widget");
+                this.renderAlert("This Mendix version is incompatible with the auto load more widget");
             }
         } else {
-            window.mx.ui.error(`Supplied target name "${this.targetName}" is not of the type listview`);
+            this.renderAlert(`Supplied target name "${this.targetName}" is not of the type listview`);
         }
 
         return valid;
@@ -72,20 +89,20 @@ class AutoLoadMore extends WidgetBase {
                 domClass.add(targetNode, customClass);
                 domStyle.set(targetNode, "height", `${targetNode.offsetHeight}px`);
                 targetWidget._loadMore();
+
+                dojoAspect.after(targetWidget, "_renderData", () => {
+                    if (targetWidget._datasource._pageSize >= targetWidget._datasource._setsize) {
+                        domClass.remove(targetNode, customClass);
+                        domStyle.set(targetNode, "height", "auto");
+                    }
+                });
             }
         });
-        this.registerEvents();
-    }
-
-    private registerEvents() {
-        if (this.targetNode) {
-            this.targetNode.addEventListener("scroll", () => this.onScroll());
-        }
     }
 
     private onScroll() {
         if (!this.isScrolling && !this.targetWidget._datasource.atEnd()) {
-            window.requestAnimationFrame(() => this.loadMore());
+            window.setTimeout(window.requestAnimationFrame(() => this.loadMore()), 0);
             this.isScrolling = true;
         }
     }
@@ -97,6 +114,10 @@ class AutoLoadMore extends WidgetBase {
             this.targetWidget._loadMore();
         }
         this.isScrolling = false;
+    }
+
+    private renderAlert(message: string) {
+        return render(createElement(Alert, { message }), this.domNode);
     }
 }
 
