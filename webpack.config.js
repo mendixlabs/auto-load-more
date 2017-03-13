@@ -2,14 +2,12 @@ const webpack = require("webpack");
 const path = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const rootFilePath = "src/com/mendix/widget/autoloadmore/";
-const fileName = "AutoLoadMore";
 
 module.exports = {
-    entry: "./" + rootFilePath + fileName + ".ts",
+    entry: "./src/AutoLoadMore.ts",
     output: {
         path: path.resolve(__dirname, "dist/tmp"),
-        filename: rootFilePath + fileName + ".js",
+        filename: "src/com/mendix/widget/autoloadmore/AutoLoadMore.js",
         libraryTarget:  "umd"
     },
     resolve: {
@@ -44,7 +42,7 @@ module.exports = {
         ], {
             copyUnmodified: true
         }),
-        new ExtractTextPlugin({ filename: "./" + rootFilePath + "ui/" + fileName + ".css" }),
+        new ExtractTextPlugin({ filename: "./src/com/mendix/widget/autoloadmore/ui/AutoLoadMore.css" }),
         new webpack.LoaderOptionsPlugin({
             debug: true
         })
