@@ -3,16 +3,17 @@ import * as WidgetBase from "mxui/widget/_WidgetBase";
 import * as dojoAspect from "dojo/aspect";
 import * as domStyle from "dojo/dom-style";
 import * as domClass from "dojo/dom-class";
+import * as domConstruct from "dojo/dom-construct";
 import * as registry from "dijit/registry";
 
-import { createElement } from "react";
-import { render, unmountComponentAtNode } from "react-dom";
-
-import { Alert } from "./components/Alert";
 import "./ui/AutoLoadMore.css";
 
 interface ListView extends mxui.widget._WidgetBase {
-    _datasource: { _setsize: number, atEnd: () => boolean, _pageSize: number };
+    _datasource: {
+        _setsize: number;
+        atEnd: () => boolean;
+        _pageSize: number;
+    };
     _loadMore: () => void;
     _onLoad: () => void;
     _renderData: () => void;
@@ -39,12 +40,6 @@ class AutoLoadMore extends WidgetBase {
         }
     }
 
-    uninitialize(): boolean {
-        unmountComponentAtNode(this.domNode);
-
-        return true;
-    }
-
     private findTargetNode(targetName: string, domNode: HTMLElement): HTMLElement | null {
         let queryNode = domNode.parentNode as HTMLElement;
         let targetNode: HTMLElement | null = null;
@@ -62,7 +57,6 @@ class AutoLoadMore extends WidgetBase {
     }
 
     private isValidWidget(targetWidget: ListView): boolean {
-        let valid = false;
         if (targetWidget && targetWidget.declaredClass === "mxui.widget.ListView") {
             if (targetWidget._onLoad
                 && targetWidget._loadMore
@@ -70,9 +64,8 @@ class AutoLoadMore extends WidgetBase {
                 && targetWidget._datasource
                 && targetWidget._datasource.atEnd
                 && typeof targetWidget._datasource._pageSize !== "undefined"
-                && typeof targetWidget._datasource._setsize !== "undefined"
-            ) {
-                valid = true;
+                && typeof targetWidget._datasource._setsize !== "undefined") {
+                    return true;
             } else {
                 this.renderAlert("This Mendix version is incompatible with the auto load more widget");
             }
@@ -80,7 +73,7 @@ class AutoLoadMore extends WidgetBase {
             this.renderAlert(`Supplied target name "${this.targetName}" is not of the type listview`);
         }
 
-        return valid;
+        return false;
     }
 
     private transformListView(targetNode: HTMLElement, targetWidget: ListView, customClass: string) {
@@ -117,7 +110,9 @@ class AutoLoadMore extends WidgetBase {
     }
 
     private renderAlert(message: string) {
-        return render(createElement(Alert, { message }), this.domNode);
+        domConstruct.place(
+            `<div class='alert alert-danger widget-auto-load-more-alert'>${message}</div>`, this.domNode, "only"
+        );
     }
 }
 

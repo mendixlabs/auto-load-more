@@ -34,6 +34,7 @@ module.exports = {
         "dojo/_base/declare",
         "dojo/dom-class",
         "dojo/dom-style",
+        "dojo/dom-construct",
         "dijit/registry"
     ],
     plugins: [
