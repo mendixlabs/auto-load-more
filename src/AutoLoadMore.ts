@@ -25,6 +25,7 @@ class AutoLoadMore extends WidgetBase {
 
     private targetWidget: ListView;
     private targetNode: HTMLElement | null;
+    private listNode: HTMLUListElement;
     private autoLoadClass: string;
     private isScrolling: boolean;
 
@@ -33,10 +34,12 @@ class AutoLoadMore extends WidgetBase {
         this.targetNode = this.findTargetNode(this.targetName, this.domNode);
         if (this.targetNode) {
             this.targetWidget = registry.byNode(this.targetNode);
-            if (this.isValidWidget(this.targetWidget)) {
-                this.transformListView(this.targetNode, this.targetWidget, this.autoLoadClass);
+            this.listNode = this.targetNode.querySelector("ul") as HTMLUListElement;
+            if (this.isValidWidget(this.targetWidget)) this.transformListView(this.targetNode);
+
+            if (this.listNode) {
+                this.listNode.addEventListener("scroll", () => this.onScroll());
             }
-            this.targetNode.addEventListener("scroll", () => this.onScroll());
         }
     }
 
@@ -76,17 +79,17 @@ class AutoLoadMore extends WidgetBase {
         return false;
     }
 
-    private transformListView(targetNode: HTMLElement, targetWidget: ListView, customClass: string) {
-        dojoAspect.after(targetWidget, "_onLoad", () => {
-            if (!targetWidget._datasource.atEnd()) {
-                domClass.add(targetNode, customClass);
-                domStyle.set(targetNode, "height", `${targetNode.offsetHeight}px`);
-                targetWidget._loadMore();
+    private transformListView(targetNode: HTMLElement) {
+        dojoAspect.after(this.targetWidget, "_onLoad", () => {
+            if (!this.targetWidget._datasource.atEnd()) {
+                domClass.add(targetNode, this.autoLoadClass);
+                domStyle.set(this.listNode, "height", `${this.listNode.offsetHeight}px`);
+                this.targetWidget._loadMore();
 
-                dojoAspect.after(targetWidget, "_renderData", () => {
-                    if (targetWidget._datasource._pageSize >= targetWidget._datasource._setsize) {
-                        domClass.remove(targetNode, customClass);
-                        domStyle.set(targetNode, "height", "auto");
+                dojoAspect.after(this.targetWidget, "_renderData", () => {
+                    if (this.targetWidget._datasource._pageSize >= this.targetWidget._datasource._setsize) {
+                        domClass.remove(targetNode, this.autoLoadClass);
+                        domStyle.set(this.listNode, "height", "auto");
                     }
                 });
             }
@@ -95,13 +98,13 @@ class AutoLoadMore extends WidgetBase {
 
     private onScroll() {
         if (!this.isScrolling && !this.targetWidget._datasource.atEnd()) {
-            window.setTimeout(window.requestAnimationFrame(() => this.loadMore()), 0);
+            window.requestAnimationFrame(() => this.loadMore());
             this.isScrolling = true;
         }
     }
 
     private loadMore() {
-        const { clientHeight, scrollHeight, scrollTop } = this.targetNode as HTMLElement;
+        const { clientHeight, scrollHeight, scrollTop } = this.listNode as HTMLElement;
         const scrollPercentage = Math.floor(scrollTop / (scrollHeight - clientHeight)) * 100;
         if (scrollPercentage >= 70 && this.targetWidget) {
             this.targetWidget._loadMore();
