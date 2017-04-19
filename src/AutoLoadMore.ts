@@ -30,6 +30,9 @@ class AutoLoadMore extends WidgetBase {
     private isScrolling: boolean;
 
     postCreate() {
+        this.onScroll = this.onScroll.bind(this);
+        this.loadMore = this.loadMore.bind(this);
+
         this.autoLoadClass = "mx-listview-auto-load-more";
         this.targetNode = this.findTargetNode(this.targetName, this.domNode);
         if (this.targetNode) {
@@ -38,7 +41,7 @@ class AutoLoadMore extends WidgetBase {
             if (this.isValidWidget(this.targetWidget)) this.transformListView(this.targetNode);
 
             if (this.listNode) {
-                this.listNode.addEventListener("scroll", () => this.onScroll());
+                this.listNode.addEventListener("scroll", this.onScroll);
             }
         }
     }
@@ -98,7 +101,7 @@ class AutoLoadMore extends WidgetBase {
 
     private onScroll() {
         if (!this.isScrolling && !this.targetWidget._datasource.atEnd()) {
-            window.requestAnimationFrame(() => this.loadMore());
+            window.requestAnimationFrame(this.loadMore);
             this.isScrolling = true;
         }
     }
