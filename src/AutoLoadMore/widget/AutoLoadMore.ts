@@ -125,7 +125,7 @@ class AutoLoadMore extends WidgetBase {
 // Declare widget prototype the Dojo way
 // Thanks to https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/dojo/README.md
 // tslint:disable : only-arrow-functions
-dojoDeclare("com.mendix.widget.autoloadmore.AutoLoadMore", [ WidgetBase ], function(Source: any) {
+dojoDeclare("AutoLoadMore.widget.AutoLoadMore", [ WidgetBase ], function(Source: any) {
     const result: any = {};
     for (const property in Source.prototype) {
         if (property !== "constructor" && Source.prototype.hasOwnProperty(property)) {

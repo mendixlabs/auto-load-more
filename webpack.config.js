@@ -4,10 +4,10 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
-    entry: "./src/AutoLoadMore.ts",
+    entry: "./src/AutoLoadMore/widget/AutoLoadMore.ts",
     output: {
         path: path.resolve(__dirname, "dist/tmp"),
-        filename: "src/com/mendix/widget/autoloadmore/AutoLoadMore.js",
+        filename: "src/AutoLoadMore/widget/AutoLoadMore.js",
         libraryTarget:  "umd"
     },
     resolve: {
@@ -42,7 +42,7 @@ module.exports = {
         ], {
             copyUnmodified: true
         }),
-        new ExtractTextPlugin({ filename: "./src/com/mendix/widget/autoloadmore/ui/AutoLoadMore.css" }),
+        new ExtractTextPlugin({ filename: "./src/AutoLoadMore/widget/ui/AutoLoadMore.css" }),
         new webpack.LoaderOptionsPlugin({
             debug: true
         })
