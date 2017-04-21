@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget id="AutoLoadMore.widget.AutoLoadMore" needsEntityContext="false" offlineCapable="true" xmlns="http://www.mendix.com/widget/1.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../xsd/widget.xsd">
+    <name>AutoLoadMore</name>
+    <description>Loads more list view items as the user scrolls</description>
+    <icon>iVBORw0KGgoAAAANSUhEUgAAAA4AAAAQCAYAAAAmlE46AAAAAXNSR0IArs4c6QAAAg5JREFUKBW9UktoU0EUPTNvkmdiQhMTq5aE+At+SpGiFi2CSFeuRMG6d2FURMG4cCO4cum2C926aF0JunNRqQVJGghEWpo0UtukaUw/L30mL595M76XEolbF71wmTP3nMM9A0PQUyNPcdvj8k45FBVSyF2GAG3RQM2ojSde431XzrrAPjc1uGI3H+HkwDnsGJvgZhNUUfCj9B0Tk29cvdp/jDahEIb8RgqrW1kYbR1e1wG4pb/X08G0dyIEDPuuUGa1A8xqSihMyUHkLtfVs8txZUJKEeXcYpro5y0hmFNQawYhTCtuA7LhEKqKFxefIMas6CDIMSll+Uxk+P74WMwSSSuaTy5UvgK0DU7qWK+VMBK6Qe7deTikUIrPsx9RXF+ZUfqG5Zw0m1GP2zt4MBjEQmWG1M1taHwN5cYifosN5KsJ4vf0Y61YQn41O7W93HyuVJJoybCRqPHyWOhw+JDLo2JZT+FXKwfqNEGZxBHfcaitAJLpRKaY1+7OT6JiBQa0DKr1sL5IZPVa9OjpvkIjDa4YcKgUvv1BHPNeQOJbaiU9X3iw9A5p29Mx2kC/hZ+kUCmpjFw/ETnr1GkB+9xOnPJdRTZTqCXn0o+zEXzCNDo/46/RHngvIadtl4dCwchgIBCE3zkAvSgwPfvlg7bEX229BbeX2EVG49Yj9rLI6DP2ci8XglyJO87/z8Y/8p/bCj/9VDgAAAAASUVORK5CYII=</icon>
+    <properties>
+        <property key="targetName" type="string" required="true">
+            <caption>Target list view</caption>
+            <category>General</category>
+            <description>The name of the listview</description>
+        </property>
+    </properties>
+</widget>
