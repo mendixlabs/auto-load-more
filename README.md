@@ -7,6 +7,8 @@ Mendix 6.
 ## Demo project
 http://autoloadmore.mxapps.io
 
+![1](assets/demo.gif)
+
 ## Usage
 - Place the widget in the same page/snippet as the target list view (right below it).
 - Add the name of the target list view to the widget (found in the common tab of the list view properties in the modeler)
