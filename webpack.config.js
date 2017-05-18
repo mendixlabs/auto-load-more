@@ -3,7 +3,7 @@ const path = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-module.exports = {
+const widgetConfig = {
     entry: "./src/AutoLoadMore/widget/AutoLoadMore.ts",
     output: {
         path: path.resolve(__dirname, "dist/tmp"),
@@ -48,3 +48,28 @@ module.exports = {
         })
     ]
 };
+
+const previewConfig = {
+    entry: "./src/AutoLoadMore/widget/AutoLoadMore.webmodeler.ts",
+    output: {
+        path: path.resolve(__dirname, "dist/tmp"),
+        filename: "src/AutoLoadMore/widget/AutoLoadMore.webmodeler.js",
+        libraryTarget: "commonjs"
+    },
+    resolve: {
+        extensions: [ ".ts", ".js" ]
+    },
+    module: {
+        rules: [
+            { test: /\.ts$/, use: "ts-loader" },
+            { test: /\.css$/, use: "css-loader" }
+        ]
+    },
+    devtool: "inline-source-map",
+    externals: [ "react" ],
+    plugins: [
+        new webpack.LoaderOptionsPlugin({ debug: true })
+    ]
+};
+
+module.exports = [ widgetConfig, previewConfig ];
