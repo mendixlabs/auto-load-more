@@ -22,7 +22,7 @@ module.exports = function (grunt) {
         watch: {
             updateWidgetFiles: {
                 files: [ "./dist/tmp/src/**/*" ],
-                tasks: [ "webpack:develop", "compress:dist", "copy:distDeployment", "copy:mpk" ],
+                tasks: [ "webpack:develop", "file_append", "compress:dist", "copy:distDeployment", "copy:mpk" ],
                 options: {
                     debounceDelay: 250,
                     livereload: true
@@ -76,10 +76,10 @@ module.exports = function (grunt) {
 
         file_append: {
             addSourceURL: {
-                files: [{
+                files: [ {
                     append: "\n\n//# sourceURL=AutoLoadMore.webmodeler.js\n",
                     input: "dist/tmp/src/AutoLoadMore/widget/AutoLoadMore.webmodeler.js"
-                }]
+                } ]
             }
         },
 
