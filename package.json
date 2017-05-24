@@ -1,7 +1,7 @@
 {
   "name": "auto-load-more",
   "widgetName": "AutoLoadMore",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Loads more items on the list view as the user scrolls",
   "repository": {
     "type": "git",
@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@types/dojo": "^1.9.37",
+    "@types/react": "^15.0.18",
     "check-dependencies": "^1.0.1",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.27.3",
@@ -23,10 +24,12 @@
     "grunt-contrib-compress": "^1.4.1",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-watch": "^1.0.0",
+    "grunt-file-append": "0.0.7",
     "grunt-newer": "^1.1.1",
     "grunt-webpack": "^2.0.1",
     "json-loader": "^0.5.4",
     "mendix-client": "git+https://github.com/FlockOfBirds/Mendix-client-typing.git",
+    "react": "^15.4.2",
     "source-map-loader": "^0.2.0",
     "style-loader": "^0.13.2",
     "ts-loader": "^2.0.1",
