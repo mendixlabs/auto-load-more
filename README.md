@@ -7,7 +7,7 @@ Mendix 6.
 ## Demo project
 http://autoloadmore.mxapps.io
 
-![1](assets/demo.gif)
+![1](https://raw.githubusercontent.com/mendixlabs/auto-load-more/1.1.0/assets/demo.gif)
 
 ## Usage
 - Place the widget in the same page/snippet as the target list view (right below it).
@@ -33,7 +33,7 @@ To set up the development environment, run:
 Create a folder named `dist` in the project root.
 
 Create a Mendix test project in the dist folder and rename its root folder to `dist/MxTestProject`. Or get the test project from
-https://github.com/mendixlabs/auto-load-more/releases/download/1.0.0/TestAutoLoadMore.mpk Changes to the widget code shall be automatically pushed to this test project.
+https://github.com/mendixlabs/auto-load-more/releases/download/1.1.0/TestAutoLoadMore.mpk Changes to the widget code shall be automatically pushed to this test project.
 
 To automatically compile, bundle and push code changes to the running test project, run:
 
