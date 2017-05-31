@@ -3,6 +3,14 @@
   "widgetName": "AutoLoadMore",
   "version": "1.1.0",
   "description": "Loads more items on the list view as the user scrolls",
+  "scripts": {
+    "pretest": "tsc",
+    "lint": "tslint -c tslint.json '**/*.ts' '**/*.tsx' --exclude '**/node_modules/**'"
+  },
+  "pre-commit": [
+    "pretest",
+    "lint"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/mendixlabs/auto-load-more"
@@ -38,5 +46,8 @@
     "typescript": "^2.2.1",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.2.0"
+  },
+  "dependencies": {
+    "pre-commit": "^1.2.2"
   }
 }
