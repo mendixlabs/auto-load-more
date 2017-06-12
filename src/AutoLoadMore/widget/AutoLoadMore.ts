@@ -11,6 +11,7 @@ import "./ui/AutoLoadMore.css";
 interface ListView extends mxui.widget._WidgetBase {
     _datasource: {
         _setsize: number;
+        _setSize: number;
         atEnd: () => boolean;
         _pageSize: number;
     };
@@ -70,7 +71,8 @@ class AutoLoadMore extends WidgetBase {
                 && targetWidget._datasource
                 && targetWidget._datasource.atEnd
                 && typeof targetWidget._datasource._pageSize !== "undefined"
-                && typeof targetWidget._datasource._setsize !== "undefined") {
+                && (typeof targetWidget._datasource._setsize !== "undefined"
+                || typeof targetWidget._datasource._setSize !== "undefined")) {
                     return true;
             } else {
                 this.renderAlert("This Mendix version is incompatible with the auto load more widget");
@@ -90,7 +92,10 @@ class AutoLoadMore extends WidgetBase {
                 this.targetWidget._loadMore();
 
                 dojoAspect.after(this.targetWidget, "_renderData", () => {
-                    if (this.targetWidget._datasource._pageSize >= this.targetWidget._datasource._setsize) {
+                    const setSize = typeof this.targetWidget._datasource._setsize !== "undefined"
+                        ? this.targetWidget._datasource._setsize
+                        : this.targetWidget._datasource._setSize;
+                    if (this.targetWidget._datasource._pageSize >= setSize) {
                         domClass.remove(targetNode, this.autoLoadClass);
                         domStyle.set(this.listNode, "height", "auto");
                     }
