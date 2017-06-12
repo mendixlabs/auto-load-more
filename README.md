@@ -7,7 +7,7 @@ Mendix 6.
 ## Demo project
 http://autoloadmore.mxapps.io
 
-![1](assets/demo.gif)
+![1](https://raw.githubusercontent.com/mendixlabs/auto-load-more/1.1.0/assets/demo.gif)
 
 ## Usage
 - Place the widget in the same page/snippet as the target list view (right below it).
