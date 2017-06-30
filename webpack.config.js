@@ -8,7 +8,7 @@ const widgetConfig = {
     output: {
         path: path.resolve(__dirname, "dist/tmp"),
         filename: "src/AutoLoadMore/widget/AutoLoadMore.js",
-        libraryTarget:  "umd"
+        libraryTarget:  "amd"
     },
     resolve: {
         extensions: [ ".ts", ".js", ".json" ],
