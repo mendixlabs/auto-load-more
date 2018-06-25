@@ -32,7 +32,6 @@ class AutoLoadMore extends WidgetBase {
     private listNode: HTMLUListElement;
     private autoLoadClass: string;
     private isScrolling: boolean;
-    private loading: boolean;
     private timeout: number;
 
     postCreate() {
@@ -108,7 +107,6 @@ class AutoLoadMore extends WidgetBase {
                 domClass.add(targetNode, this.autoLoadClass);
                 if (this.scrollbar) domStyle.set(this.listNode, "height", `${this.listNode.offsetHeight}px`);
                 dojoAspect.after(this.targetWidget, "_renderData", () => { this.afterRenderData(targetNode); });
-                this.loading = true;
                 this.targetWidget._loadMore();
             }
         });
@@ -123,20 +121,10 @@ class AutoLoadMore extends WidgetBase {
             domClass.remove(targetNode, this.autoLoadClass);
             domStyle.set(this.listNode, "height", "auto");
         }
-
-        const checkIfDataRendered = () => {
-            const sourceCount = this.targetWidget._datasource._offset + this.targetWidget._datasource._pageSize;
-            if (sourceCount === this.listNode.children.length) {
-                this.loading = false;
-            } else if (sourceCount < setSize) {
-                setTimeout(checkIfDataRendered, 200);
-            }
-        };
-        checkIfDataRendered();
     }
 
     private onScroll(): void {
-        if (!this.isScrolling && !this.targetWidget._datasource.atEnd() && !this.loading) {
+        if (!this.isScrolling && !this.targetWidget._datasource.atEnd()) {
             this.isScrolling = true;
             window.requestAnimationFrame(this.loadMore);
         }
@@ -152,8 +140,10 @@ class AutoLoadMore extends WidgetBase {
             scrollPercentage = Math.floor(Math.abs(boundTop) / li.getBoundingClientRect().height * 100);
         }
         if (scrollPercentage >= 60 && this.targetWidget) {
-            this.loading = true;
-            this.targetWidget._loadMore();
+            (mendix.lang as any).runOrDelay(() => { this.targetWidget._loadMore(); }, () => {
+                const sourceCount = this.targetWidget._datasource._offset + this.targetWidget._datasource._pageSize;
+                return sourceCount === this.listNode.children.length;
+            });
         }
         this.isScrolling = false;
     }
