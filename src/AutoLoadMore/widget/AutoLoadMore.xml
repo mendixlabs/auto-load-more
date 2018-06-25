@@ -9,5 +9,10 @@
             <category>General</category>
             <description>The name of the listview</description>
         </property>
+        <property key="scrollbar" type="boolean" defaultValue="true">
+            <caption>Scrollbar</caption>
+            <category>General</category>
+            <description>Add a scrollbar to the listview?</description>
+        </property>
     </properties>
 </widget>

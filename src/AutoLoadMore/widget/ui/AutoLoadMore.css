@@ -1,8 +1,26 @@
 .mx-listview.mx-listview-auto-load-more .mx-listview-loadMore {
-    display: none;
+	display: none;
 }
 
 .mx-listview.mx-listview-auto-load-more ul.mx-list {
-    overflow-y: scroll;
-    overflow-x: hidden;
+	overflow-x: hidden;
+}
+
+.mx-listview.mx-listview-auto-load-more .mx-listview-loading {
+	width: 100%;
+	border: none;
+	display: flex;
+	background: none;
+	margin-bottom: 20px;
+	justify-content: center;
+}
+
+.mx-listview.mx-listview-auto-load-more .mx-listview-loading img {
+	width: 0;
+	height: 0;
+	padding: 30px;
+	background-image: url('mx-progress-blue.svg');
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 60px;
 }
