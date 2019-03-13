@@ -8,7 +8,7 @@ const widgetConfig = {
     output: {
         path: path.resolve(__dirname, "dist/tmp"),
         filename: "src/AutoLoadMore/widget/AutoLoadMore.js",
-        libraryTarget:  "amd"
+        libraryTarget: "amd"
     },
     resolve: {
         extensions: [ ".ts", ".js", ".json" ],
@@ -25,27 +25,15 @@ const widgetConfig = {
             }) }
         ]
     },
+    mode: "development",
     devtool: "source-map",
-    externals: [
-        "mxui/widget/_WidgetBase",
-        "dojo/aspect",
-        "dojo/_base/declare",
-        "dojo/dom-class",
-        "dojo/dom-style",
-        "dojo/dom-construct",
-        "dijit/registry"
-    ],
+    externals: [ /^mxui\/|^mendix\/|^dojo\/|^dijit\// ],
     plugins: [
         new CopyWebpackPlugin([
             { from: "src/**/*.js" },
             { from: "src/**/*.xml" }
-        ], {
-            copyUnmodified: true
-        }),
-        new ExtractTextPlugin({ filename: "./src/AutoLoadMore/widget/ui/AutoLoadMore.css" }),
-        new webpack.LoaderOptionsPlugin({
-            debug: true
-        })
+        ], { copyUnmodified: true }),
+        new ExtractTextPlugin({ filename: "./src/AutoLoadMore/widget/ui/AutoLoadMore.css" })
     ]
 };
 
@@ -65,11 +53,9 @@ const previewConfig = {
             { test: /\.css$/, use: "css-loader" }
         ]
     },
+    mode: "development",
     devtool: "inline-source-map",
-    externals: [ "react" ],
-    plugins: [
-        new webpack.LoaderOptionsPlugin({ debug: true })
-    ]
+    externals: [ "react", "react-dom" ]
 };
 
 module.exports = [ widgetConfig, previewConfig ];

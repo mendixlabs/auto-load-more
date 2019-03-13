@@ -84,7 +84,9 @@
             }
         ],
         "curly": false,
-        "arrow-parens": false
+        "arrow-parens": false,
+        "no-submodule-imports": false,
+        "no-implicit-dependencies": [ true, [ "mxui", "dojo", "dijit", "react" ] ]
     },
     "jsRules": {
         "trailing-comma": [ false ],
