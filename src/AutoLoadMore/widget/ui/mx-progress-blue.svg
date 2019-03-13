@@ -1,0 +1,45 @@
+<svg viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <style>
+    @keyframes rotate {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes stroke-width {
+        0%, 100% {
+            stroke-width: 0;
+        }
+        45%, 55% {
+            stroke-width: 2;
+        }
+        50% {
+            stroke-width: 4;
+        }
+    }
+    @keyframes stroke-dash {
+        0% {
+            stroke-dasharray: 0, 300;
+            stroke-dashoffset: 0;
+        }
+        50% {
+            stroke-dasharray: 300, 0;
+            stroke-dashoffset: 0;
+        }
+        100% {
+            stroke-dasharray: 300, 0;
+            stroke-dashoffset: -300;
+        }
+    }
+    circle {
+        transform-origin: 50px 50px;
+        stroke: #0595DB ;
+        stroke-width: 4;
+        stroke-linecap: round;
+        stroke-dasharray: 300, 0;
+        stroke-dashoffset: 50;
+        animation: stroke-dash 2000ms linear infinite, stroke-width 2000ms linear infinite, rotate 2000ms linear infinite;
+    }
+    </style>
+    <circle fill="none" cx="50" cy="50" r="45" />
+</svg>
