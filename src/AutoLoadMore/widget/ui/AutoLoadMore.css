@@ -2,7 +2,7 @@
     display: none;
 }
 
-.mx-listview.mx-listview-auto-load-more ul.mx-list {
+.mx-listview.mx-listview-auto-load-more > ul {
     overflow-y: scroll;
     overflow-x: hidden;
 }
