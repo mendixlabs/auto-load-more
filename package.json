@@ -44,7 +44,7 @@
     "react": "^16.8.4",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.1",
-    "ts-loader": "^5.3.3",
+    "ts-loader": "^6.0.0",
     "tslint": "^5.14.0",
     "tslint-eslint-rules": "^5.4.0",
     "typescript": "^3.3.3333",
